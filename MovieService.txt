@@ -1,0 +1,35 @@
+package com.example.demo;
+
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+public class MovieService {
+
+    private final MovieRepoSentry movieRepoSentry;
+
+    public List<Movie> getMovies(){
+        return movieRepoSentry.findAll();
+    }
+
+    public void  addMovies(Movie movie){
+        movieRepoSentry.save(movie);
+    }
+    public void update(Movie movie,Integer id){
+        
+        Movie fearMovie=movieRepoSentry.findById(id).get();
+        fearMovie.setId(movie.getId());
+        fearMovie.setName(movie.getName());
+        fearMovie.setGenre(movie.getGenre());
+        fearMovie.setDuration(movie.getDuration());
+        fearMovie.setRating(movie.getRating());
+        fearMovie.setLaunchDate(movie.getLaunchDate());
+        movieRepoSentry.save(fearMovie);
+    }
+
+    public void delete(Integer id){
+        movieRepoSentry.deleteById(id);
+    }
+}
